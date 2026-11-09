@@ -19,6 +19,8 @@
 # the carry is zero: five instructions, the counter and the loop branch
 # included. Unrolling by two would save one instruction every two passes for
 # 28 more bytes, and the benchmark averages fewer than three passes.
+#
+# Registers: a0 = sum, a1 = carry, a2 = n, a3 = passes, t0 = scratch.
     .globl  op1_asm
     .type   op1_asm, @function
     .align  2
@@ -37,6 +39,8 @@ op1_asm:
     .size   op1_asm, .-op1_asm
 
 # op2: a - b. The bitwise model op1(a, op1(~b, 1)) is what sub does in one.
+#
+# Registers: a0 = a, then the result, a1 = b.
     .globl  op2_asm
     .type   op2_asm, @function
     .align  2
@@ -46,6 +50,8 @@ op2_asm:
     .size   op2_asm, .-op2_asm
 
 # op3: floor((a + b) / 2) = (a & b) + ((a ^ b) >> 1), with no 33-bit sum.
+#
+# Registers: a0 = a, then the result, a1 = b, t0 = a & b.
     .globl  op3_asm
     .type   op3_asm, @function
     .align  2
